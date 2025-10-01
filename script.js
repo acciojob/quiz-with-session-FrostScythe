@@ -1,29 +1,29 @@
 // Use the same questions the test expects
-const quizData = [
+const questions = [
   {
     question: "What is the capital of France?",
-    options: ["Berlin", "Madrid", "Paris", "Rome"],
-    correct: 2
+    choices: ["Berlin", "Madrid", "Paris", "Rome"],
+    answer: 2
+  },
+  {
+    question: "What is the highest mountain in the world?",
+    choices: ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
+    answer: 1
+  },
+  {
+    question: "Who developed the theory of relativity?",
+    choices: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Nikola Tesla"],
+    answer: 1
+  },
+  {
+    question: "Which element has the chemical symbol 'O'?",
+    choices: ["Osmium", "Oxygen", "Gold", "Zinc"],
+    answer: 1
   },
   {
     question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Jupiter", "Venus"],
-    correct: 1
-  },
-  {
-    question: "What is the largest mammal?",
-    options: ["Elephant", "Blue Whale", "Giraffe", "Shark"],
-    correct: 1
-  },
-  {
-    question: "Who wrote 'Hamlet'?",
-    options: ["Charles Dickens", "William Shakespeare", "Mark Twain", "J.K. Rowling"],
-    correct: 1
-  },
-  {
-    question: "What is the boiling point of water?",
-    options: ["90°C", "100°C", "120°C", "80°C"],
-    correct: 1
+    choices: ["Earth", "Mars", "Jupiter", "Venus"],
+    answer: 1
   }
 ];
 
