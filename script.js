@@ -38,32 +38,39 @@ let progress = JSON.parse(sessionStorage.getItem("progress")) || {};
 // Load previous score from local storage
 let savedScore = localStorage.getItem("score");
 if (savedScore !== null) {
-  scoreDiv.textContent = `Your score is ${savedScore} out of ${quizData.length}.`;
+  scoreDiv.textContent = `Your score is ${savedScore} out of ${questions.length}.`;
 }
 
 // Render questions
-quizData.forEach((q, index) => {
+questions.forEach((q, index) => {
   const questionDiv = document.createElement("div");
   questionDiv.innerHTML = `<p>${q.question}</p>`;
 
-  q.options.forEach((option, i) => {
+  q.choices.forEach((choice, i) => {
     const input = document.createElement("input");
     input.type = "radio";
     input.name = `q${index}`;
-    input.value = option;
+    input.value = choice;
 
     // Restore saved progress
     if (progress[index] == i) {
-      input.checked = true;   // ✅ fix checked state
+      input.checked = true;
+      input.setAttribute("checked", "true"); // ✅ Cypress requires attribute
     }
 
     input.addEventListener("change", () => {
       progress[index] = i;
       sessionStorage.setItem("progress", JSON.stringify(progress));
+
+      // Ensure only one checked attribute per group
+      document.querySelectorAll(`input[name="q${index}"]`).forEach(el => {
+        el.removeAttribute("checked");
+      });
+      input.setAttribute("checked", "true");
     });
 
     const label = document.createElement("label");
-    label.textContent = option;
+    label.textContent = choice;
 
     questionDiv.appendChild(input);
     questionDiv.appendChild(label);
@@ -77,12 +84,12 @@ quizData.forEach((q, index) => {
 submitBtn.addEventListener("click", () => {
   let score = 0;
 
-  quizData.forEach((q, index) => {
-    if (progress[index] == q.correct) {
+  questions.forEach((q, index) => {
+    if (progress[index] == q.answer) {
       score++;
     }
   });
 
-  scoreDiv.textContent = `Your score is ${score} out of ${quizData.length}.`;
+  scoreDiv.textContent = `Your score is ${score} out of ${questions.length}.`;
   localStorage.setItem("score", score);
 });
