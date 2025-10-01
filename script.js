@@ -2,30 +2,31 @@
 const questions = [
   {
     question: "What is the capital of France?",
-    choices: ["Berlin", "Madrid", "Paris", "Rome"],
+    choices: ["Paris", "London", "Berlin", "Madrid"],
+    answer: 0
+  },
+  {
+    question: "What is the largest country by area?",
+    choices: ["China", "USA", "Russia", "Canada"],
     answer: 2
   },
   {
-    question: "What is the highest mountain in the world?",
-    choices: ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
+    question: "Who wrote 'Hamlet'?",
+    choices: ["Charles Dickens", "William Shakespeare", "Leo Tolstoy", "Mark Twain"],
     answer: 1
   },
   {
-    question: "Who developed the theory of relativity?",
-    choices: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Nikola Tesla"],
-    answer: 1
+    question: "What is the boiling point of water?",
+    choices: ["90°C", "95°C", "100°C", "110°C"],
+    answer: 2
   },
   {
-    question: "Which element has the chemical symbol 'O'?",
-    choices: ["Osmium", "Oxygen", "Gold", "Zinc"],
-    answer: 1
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    choices: ["Earth", "Mars", "Jupiter", "Venus"],
-    answer: 1
+    question: "Which planet is closest to the Sun?",
+    choices: ["Mercury", "Venus", "Earth", "Mars"],
+    answer: 0
   }
 ];
+
 
 // DOM elements
 const questionsContainer = document.getElementById("questions");
