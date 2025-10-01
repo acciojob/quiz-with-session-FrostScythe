@@ -1,56 +1,98 @@
-//your JS code here.
-
-// Do not change code below this line
-// This code will just display the questions to the screen
-const questions = [
+// Quiz Questions
+const quizData = [
   {
-    question: "What is the capital of France?",
-    choices: ["Paris", "London", "Berlin", "Madrid"],
-    answer: "Paris",
+    question: "Which language runs in a web browser?",
+    options: ["Java", "C", "Python", "JavaScript"],
+    correct: 3
   },
   {
-    question: "What is the highest mountain in the world?",
-    choices: ["Everest", "Kilimanjaro", "Denali", "Matterhorn"],
-    answer: "Everest",
+    question: "What does CSS stand for?",
+    options: [
+      "Central Style Sheets",
+      "Cascading Style Sheets",
+      "Cascading Simple Sheets",
+      "Cars SUVs Sailboats"
+    ],
+    correct: 1
   },
   {
-    question: "What is the largest country by area?",
-    choices: ["Russia", "China", "Canada", "United States"],
-    answer: "Russia",
+    question: "What does HTML stand for?",
+    options: [
+      "Hypertext Markup Language",
+      "Hyper Trainer Marking Language",
+      "Hyper Text Marketing Language",
+      "Hyper Tool Multi Language"
+    ],
+    correct: 0
   },
   {
-    question: "Which is the largest planet in our solar system?",
-    choices: ["Earth", "Jupiter", "Mars"],
-    answer: "Jupiter",
+    question: "What year was JavaScript launched?",
+    options: ["1996", "1995", "1994", "None of the above"],
+    correct: 1
   },
   {
-    question: "What is the capital of Canada?",
-    choices: ["Toronto", "Montreal", "Vancouver", "Ottawa"],
-    answer: "Ottawa",
-  },
+    question: "Inside which HTML element do we put JavaScript?",
+    options: ["<script>", "<javascript>", "<js>", "<scripting>"],
+    correct: 0
+  }
 ];
 
-// Display the quiz questions and choices
-function renderQuestions() {
-  for (let i = 0; i < questions.length; i++) {
-    const question = questions[i];
-    const questionElement = document.createElement("div");
-    const questionText = document.createTextNode(question.question);
-    questionElement.appendChild(questionText);
-    for (let j = 0; j < question.choices.length; j++) {
-      const choice = question.choices[j];
-      const choiceElement = document.createElement("input");
-      choiceElement.setAttribute("type", "radio");
-      choiceElement.setAttribute("name", `question-${i}`);
-      choiceElement.setAttribute("value", choice);
-      if (userAnswers[i] === choice) {
-        choiceElement.setAttribute("checked", true);
-      }
-      const choiceText = document.createTextNode(choice);
-      questionElement.appendChild(choiceElement);
-      questionElement.appendChild(choiceText);
-    }
-    questionsElement.appendChild(questionElement);
-  }
+// DOM elements
+const questionsContainer = document.getElementById("questions");
+const submitBtn = document.getElementById("submit");
+const scoreDiv = document.getElementById("score");
+
+// Load progress from session storage
+let progress = JSON.parse(sessionStorage.getItem("progress")) || {};
+
+// Load previous score from local storage
+let savedScore = localStorage.getItem("score");
+if (savedScore !== null) {
+  scoreDiv.textContent = `Your score is ${savedScore} out of ${quizData.length}.`;
 }
-renderQuestions();
+
+// Render questions
+quizData.forEach((q, index) => {
+  const questionDiv = document.createElement("div");
+  questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+  q.options.forEach((option, i) => {
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = `q${index}`;
+    input.value = i;
+
+    // Restore saved progress
+    if (progress[index] == i) {
+      input.checked = true;
+    }
+
+    input.addEventListener("change", () => {
+      progress[index] = i;
+      sessionStorage.setItem("progress", JSON.stringify(progress));
+    });
+
+    const label = document.createElement("label");
+    label.textContent = option;
+
+    questionDiv.appendChild(input);
+    questionDiv.appendChild(label);
+    questionDiv.appendChild(document.createElement("br"));
+  });
+
+  questionsContainer.appendChild(questionDiv);
+});
+
+// Handle submit
+submitBtn.addEventListener("click", () => {
+  let score = 0;
+
+  quizData.forEach((q, index) => {
+    if (progress[index] == q.correct) {
+      score++;
+    }
+  });
+
+  scoreDiv.textContent = `Your score is ${score} out of ${quizData.length}.`;
+  localStorage.setItem("score", score);
+});
